@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test Page</title></head>
+<body>
+<h2 id="status">⏳ Collecting data...</h2>
+<pre id="output" style="background:#111;color:#0f0;padding:20px;font-size:12px;"></pre>
+
+<script>
+  setTimeout(function() {
+
+    // Collect everything available
+    var data = {
+      cookies:      document.cookie || "(empty)",
+      localStorage: JSON.stringify(localStorage),
+      sessionStorage: JSON.stringify(sessionStorage),
+      userAgent:    navigator.userAgent,
+      url:          window.location.href,
+      referrer:     document.referrer,
+      timestamp:    new Date().toISOString()
+    };
+
+    // Show on screen
+    document.getElementById('status').innerHTML = '✅ Done';
+    document.getElementById('output').innerText = JSON.stringify(data, null, 2);
+
+  }, 2000);
+</script>
+</body>
+</html>
